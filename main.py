@@ -1,30 +1,68 @@
 from bs4 import BeautifulSoup
+import requests
 
-with open("website.html", "r", encoding="utf-8") as file:
-    contents = file.read()
+response = requests.get("https://news.ycombinator.com/")
+webpage = response.text
 
-soup = BeautifulSoup(contents, 'html.parser')
-anchor_tags = soup.find_all(name='a')
-print('--------------------------------------------')
-for tag in anchor_tags:
-    print(tag.get('href'))
+soup = BeautifulSoup(webpage, 'html.parser')
 
-heading = soup.find(name='h1', id='name')
-print(heading)
-print('--------------------------------------------')
+title = soup.find(class_='storylink')
+print(title.get_text())
 
-classes = soup.find(name='h3', class_='heading')
-print(classes.get_text())
-print('--------------------------------------------')
+title = soup.find(href="https://culdesac.com/")
+print(title.get_text())
 
-name = soup.select_one(selector='#name')
-print(name)
-print('--------------------------------------------')
+links = soup.select(selector='.storylink')
+print(links)
 
-heading = soup.select(selector='.heading')
-print(heading)
-# get_text
-# findall(name)
-# you can iterate through the findall output (list)
-# find(name, id) gets the first occurrence of the thing that matches the name and id
-# select_one(selector) allows you to pick stuff by its unique html tag combinations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+# with open("website.html", "r", encoding="utf-8") as file:
+#     contents = file.read()
+#
+# soup = BeautifulSoup(contents, 'html.parser')
+# anchor_tags = soup.find_all(name='a')
+# print('--------------------------------------------')
+# for tag in anchor_tags:
+#     print(tag.get('href'))
+#
+# heading = soup.find(name='h1', id='name')
+# print(heading)
+# print('--------------------------------------------')
+#
+# classes = soup.find(name='h3', class_='heading')
+# print(classes.get_text())
+# print('--------------------------------------------')
+#
+# name = soup.select_one(selector='#name')
+# print(name)
+# print('--------------------------------------------')
+#
+# heading = soup.select(selector='.heading')
+# print(heading)
+# # get_text
+# # findall(name)
+# # you can iterate through the findall output (list)
+# # find(name, id) gets the first occurrence of the thing that matches the name and id
+# # select_one(selector) allows you to pick stuff by its unique html tag combinations
